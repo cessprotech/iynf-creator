@@ -1,0 +1,65 @@
+# version: 0.2
+
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 18
+#   pre_build:
+#     commands:
+#       - echo log in to Amazon-ECR...
+#       - aws --version
+#       - echo $AWS_DEFAULT_REGION
+#       - aws ecr get-login-password --region $AWS_DEFAULT_REGION
+#       - REPOSITORY_URI=305060840227.dkr.ecr.us-east-1.amazonaws.com/iynfluencer_user
+#       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+#       - IMAGE_TAG=${COMMIT_HASH:=latest}
+#   build:
+#     commands:
+#       - echo Build started on `date`
+#       - echo Building the Docker image.
+#       - docker build -t $REPOSITORY_URI:latest .
+#       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+#   post_build:
+#     commands:
+#       - echo Build completed on `date`
+#       - docker push $REPOSITORY_URI:latest
+#       - docker push $REPOSITORY_URI:$IMAGE_TAG
+#       - echo write definitions file...
+#       - printf '[{"name":"exp-code-pipeline","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+# artifacts:
+#   files: imagedefinitions.json
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - echo $AWS_DEFAULT_REGION
+      - IMAGE_NAME=iynfluencer_creator
+      - ACCOUNT_URI=305060840227.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ACCOUNT_URI
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo Downloading environment file from S3...
+      - aws s3 cp s3://iynf-envs/creator.env .env
+
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t $IMAGE_NAME .
+      - docker tag $IMAGE_NAME:latest $ACCOUNT_URI/$IMAGE_NAME:latest
+  post_build:
+    commands:
+      - echo Pushing Docker image to Amazon ECR...
+      - docker push $ACCOUNT_URI/$IMAGE_NAME:latest
+      - printf '[{"name":"creator","imageUri":"%s"}]' $ACCOUNT_URI/$IMAGE_NAME:latest > imagedefinitions.json
+artifacts:
+  files:
+    - Dockerfile
+    - .env
+    - imagedefinitions.json
