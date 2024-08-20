@@ -210,7 +210,7 @@ export class JobService {
   async payInfluencer(query: HiredDto, creatorId: string) {
     const data = await this.influencerMService.acceptBid(query.bidId);
 
-    await this.jobSuspendedOrNotFoundOrHired(data.jobId, creatorId);
+    const job = await this.jobSuspendedOrNotFoundOrHired(data.jobId, creatorId);
 
     const session = await this.connection.startSession();
 
@@ -226,17 +226,47 @@ export class JobService {
         amount: data.price
       })
 
+
+      const [hired] = await this.hiredModel.create([{
+        jobId: job.jobId,
+        creatorId: job.creatorId,
+        influencerId: data.influencerId,
+        bidId: data.bidId,
+        price: data.price,
+        deadline: job.duration,
+      }], {
+        session
+      });
+
+      await this.jobModel.findOneAndUpdate({ jobId: job.jobId }, {
+        $set: {
+          hired: true,
+          hiredId: hired.hiredId,
+          influencerId: hired.influencerId,
+          status: 'In Progress'
+        }
+      }, { new: true, runValidators: true, session });
+
+
+      await this.connection.db.collection('bids').updateMany({ jobId: hired.jobId }, {
+        $set: {
+          hired: false,
+          status: 'declined'
+        }
+      }, { session });
+
+      await this.connection.db.collection('bids').findOneAndUpdate({ bidId: hired.bidId }, {
+        $set: {
+          hired: true,
+          hiredId: hired.hiredId,
+          status: 'accepted'
+        }
+      }, { session });
+
+
+
       await session.commitTransaction();
       session.endSession();
-
-      await this.jobModel.findOneAndUpdate(
-        { jobId: data.jobId },
-        { $set: { status: 'In Progress' } },
-        {
-          new: true,
-          runValidators: true
-        }
-      );
 
       return transaction;
       // return {
