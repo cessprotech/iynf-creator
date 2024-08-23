@@ -73,6 +73,8 @@ export class MeController {
     paginateOptions.populate = [
       { path: 'bidsCount' },
       { path: 'review' },
+      { path: 'creator' },
+      { path: 'influencer' }
     ];
 
     return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
