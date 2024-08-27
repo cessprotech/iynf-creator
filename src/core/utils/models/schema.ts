@@ -41,9 +41,7 @@ export const customPropsDefault = (props?: string | string[]) => ({
 
   toJSON: customProps(props),
 
-  toObject: customProps(props),
-
-  strictPopulate: false,
+  toObject: customProps(props)
 });
 
 /**
