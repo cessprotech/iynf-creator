@@ -89,7 +89,7 @@ JobSchema.virtual('influencer', {
   ref: "Influencer",
   localField: 'influencerId',
   foreignField: 'influencerId',
-  justOne: true,
+  justOne: true
 });
 
 JobSchema.virtual('creator', {
