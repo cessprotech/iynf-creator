@@ -70,22 +70,14 @@ export class MeController {
   async getMyJobs(@Query() query, @Req() req) {
     const { otherQuery, paginateOptions } = QueryOptions(query, true);
 
-    // paginateOptions.populate = [
-    //   { path: 'bidsCount' },
-    //   { path: 'review' },
-    //   { path: 'creator' },
-    //   // { path: 'influencer' },
-    //   { path: 'influencer', options: { populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar' ] }]} },
-    // ];
-
-    const populate = [
+    paginateOptions.populate = [
       { path: 'bidsCount' },
       { path: 'review' },
-      { path: 'creator', select: ['creatorId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'], unwindType: 1 }], unwindType: 1 },
-      { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'], unwindType: 1 }], unwindType: 1 },
+      { path: 'creator', select: ['creatorId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
+      { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
     ];
 
-    return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, populate);
+    return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
   }
 
   @Get(`${jobsRoute}/:id/single`)
