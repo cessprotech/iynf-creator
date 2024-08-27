@@ -116,9 +116,7 @@ JobSchema.virtual('bidsCount', {
 JobSchema.virtual('review', {
   ref: "Review",
   localField: 'jobId',
-  foreignField: 'jobId',
-  match: { suspended: false },
-  count: true
+  foreignField: 'jobId'
 });
 
 JobSchema.statics.getJobsWithoutBids = async function (query: {
