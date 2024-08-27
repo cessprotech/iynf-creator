@@ -77,7 +77,7 @@ export class JobService {
 
     // return await this.jobModel.paginate({ ...rest, creatorId }, paginateOptions);
     
-    return await AppPipeline(this.jobModel).getAll({ ...rest, creatorId }, paginateOptions);
+    return await AppPipeline(this.jobModel).getAll(rest, paginateOptions);
   }
 
 
