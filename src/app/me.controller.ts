@@ -70,25 +70,15 @@ export class MeController {
   async getMyJobs(@Query() query, @Req() req) {
     const { otherQuery, paginateOptions } = QueryOptions(query, true);
 
-    // paginateOptions.populate = [
-    //   { path: 'bidsCount' },
-    //   { path: 'review' },
-    //   { path: 'creator' },
-    //   // { path: 'influencer' },
-    //   { path: 'influencer', options: { populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar' ] }]} },
-    // ];
-
     paginateOptions.populate = [
       { path: 'bidsCount' },
       { path: 'review' },
-      { path: 'creator', select: ['creatorId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'] }] },
-      { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'] }] },
-      
+      { path: 'creator' },
+      // { path: 'influencer' },
+      { path: 'influencer', options: { populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar' ] }]} },
     ];
 
-    return await this.jobService.getAllWithAggregate(otherQuery, paginateOptions);
-
-    // return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
+    return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
   }
 
   @Get(`${jobsRoute}/:id/single`)
