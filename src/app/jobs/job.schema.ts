@@ -90,19 +90,13 @@ JobSchema.virtual('influencer', {
   localField: 'influencerId',
   foreignField: 'influencerId',
   justOne: true,
-  options: {
-    populate: [{ path: 'user' }]
-  }
 });
 
 JobSchema.virtual('creator', {
   ref: "Creator",
   localField: 'creatorId',
   foreignField: 'creatorId',
-  justOne: true,
-  options: {
-    populate: [{ path: 'user' }]
-  }
+  justOne: true
 });
 
 JobSchema.virtual('bids', {
