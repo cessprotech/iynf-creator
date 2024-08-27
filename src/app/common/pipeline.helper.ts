@@ -26,6 +26,13 @@ const lookups = {
         foreignField: 'jobId',
         count: true,
     },
+
+    review: {
+        from: 'reviews',
+        localField: 'jobId',
+        foreignField: 'jobId',
+        count: true,
+    },
 }
 
 export const AggregateQueryMethods = {
