@@ -90,15 +90,13 @@ JobSchema.virtual('influencer', {
   localField: 'influencerId',
   foreignField: 'influencerId',
   justOne: true,
-  options: { select: 'firstName lastName avatar' }
 });
 
 JobSchema.virtual('creator', {
   ref: "Creator",
   localField: 'creatorId',
   foreignField: 'creatorId',
-  justOne: true,
-  options: { select: 'firstName lastName avatar' }
+  justOne: true
 });
 
 JobSchema.virtual('bids', {
