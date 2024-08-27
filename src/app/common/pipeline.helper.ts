@@ -31,7 +31,6 @@ const lookups = {
         from: 'reviews',
         localField: 'jobId',
         foreignField: 'jobId',
-        count: true,
     },
 }
 
