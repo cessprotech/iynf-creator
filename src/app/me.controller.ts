@@ -74,14 +74,7 @@ export class MeController {
       { path: 'bidsCount' },
       { path: 'review' },
       { path: 'creator' },
-      // { path: 'influencer' },
-      { path: 'influencer', 
-        select: ['influencerId', 'userId'], 
-        populate: [
-          { path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'], strictPopulate: false }
-        ], 
-        unwindType: 1 
-      },
+      { path: 'influencer' },
     ];
 
     return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
