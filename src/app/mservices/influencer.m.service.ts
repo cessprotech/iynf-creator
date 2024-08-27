@@ -66,6 +66,19 @@ export class InfluencerMService {
     return response.data;
   }
 
+  async markComplete(balanceDto: { influencerId: string, amount: number} ) {
+
+    const response: MSResponse = await firstValueFrom(
+      this.influencerClient.send({ cmd: 'ADD_BALANCE' }, { ...balanceDto }),
+    );
+
+    if (!response.status) {
+      throw new BadRequestException(response.error);
+    }
+
+    return response.data;
+  }
+
   async createTransaction(transactionDto: TransactionDto) {
     const response: MSResponse = await firstValueFrom(
       this.paymentClient.send({ cmd: 'PAY_BID' }, {

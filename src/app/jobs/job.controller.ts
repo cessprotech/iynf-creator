@@ -59,6 +59,7 @@ export class JobController {
 
     paginateOptions.populate = [
       { path: 'creator', select: ['creatorId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'], unwindType: 1 }], unwindType: 1 },
+      { path: 'review' },
     ];
 
     return await this.jobService.getAllWithAggregate(otherQuery, paginateOptions);

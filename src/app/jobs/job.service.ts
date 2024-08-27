@@ -168,14 +168,23 @@ export class JobService {
   async markAsCompleted(jobid: string, creatorId: string) {
     const job = await this.jobSuspendedOrNotFoundOrHired(jobid, creatorId);
 
-    return await this.jobModel.findOneAndUpdate(
+    let complete = await this.jobModel.findOneAndUpdate(
       { jobId: jobid },
       { $set: { status: 'Completed' } },
       {
         new: true,
         runValidators: true
       }
-    );
+    )
+
+    const hired = await this.hiredModel.findOne({ jobId: job.jobId, })
+
+    await this.influencerMService.markComplete({
+      influencerId: hired.influencerId,
+      amount: hired.price
+    });
+
+    return complete
 
   }
 
