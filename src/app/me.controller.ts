@@ -70,15 +70,12 @@ export class MeController {
   async getMyJobs(@Query() query, @Req() req) {
     const { otherQuery, paginateOptions } = QueryOptions(query, true);
 
-    paginateOptions.populate = [
-      { path: 'bidsCount' },
-      { path: 'review' },
-      { path: 'creator' },
-      {
-        path: 'influencer',
-        populate: { path: 'user', select: 'firstName lastName avatar' },
-      },
-    ];
+    // paginateOptions.populate = [
+    //   { path: 'bidsCount' },
+    //   { path: 'review' },
+    //   { path: 'creator' },
+    //   { path: 'influencer' },
+    // ];
 
     return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
   }
