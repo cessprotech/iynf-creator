@@ -71,11 +71,24 @@ export class JobService {
     return await this.jobModel.paginate({ ...rest }, paginateOptions);
   }
 
-  async getMyJobs(query: Record<string, any> = {}, creatorId: string, paginateOptions: PaginateOptions = {}) {
+  async getMyJobs(query: Record<string, any> = {}, creatorId: string, populateOptions: PopulateOptions = []) {
 
-    const { page, limit, select, sort, ...rest } = query;
+    const queryy = {
+      $or: [
+        { creatorId: creatorId || '' }
+      ]
+    };
 
-    return await this.jobModel.paginate({ ...rest, creatorId }, paginateOptions);
+    const job = await AppPipeline(this.jobModel).getAll(queryy, populateOptions);
+
+    if (!job) {
+      throw new NotFoundException('Job Not Found');
+    }
+
+    return job;
+    // const { page, limit, select, sort, ...rest } = query;
+
+    // return await this.jobModel.paginate({ ...rest, creatorId }, paginateOptions);
   }
 
 
