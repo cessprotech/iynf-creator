@@ -41,6 +41,7 @@ export class JobController {
       { path: 'creator', select: ['creatorId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar', 'country'], unwindType: 1 }], unwindType: 1 },
       { path: 'bidsCount' },
       { path: 'bids' },
+      { path: 'review' }, 
     ];
 
     otherQuery.influencerId = { $exists: false };
