@@ -23,6 +23,8 @@ export class InfluencerMService {
 
     @Inject(APP_CONFIG.INFLUENCER_SERVICE) private readonly influencerClient: ClientProxy,
 
+    @Inject(APP_CONFIG.USER_SERVICE) private readonly userClient: ClientProxy,
+
     @Inject(APP_CONFIG.PAYMENT_SERVICE) private readonly paymentClient: ClientProxy,
 
   ) { }
@@ -66,10 +68,13 @@ export class InfluencerMService {
     return response.data;
   }
 
-  async markComplete(balanceDto: { influencerId: string, amount: number} ) {
+  async markComplete(balanceDto: any ) {
 
     const response: MSResponse = await firstValueFrom(
-      this.influencerClient.send({ cmd: 'ADD_BALANCE' }, { ...balanceDto }),
+      this.userClient.send({ cmd: 'ADD_BALANCE' }, {
+        influencerId: balanceDto.influencerId,
+        amount: balanceDto.amount,
+      }),
     );
 
     if (!response.status) {
