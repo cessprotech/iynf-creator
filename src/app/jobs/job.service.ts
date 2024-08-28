@@ -168,7 +168,16 @@ export class JobService {
   }
 
   async markAsCompleted(jobid: string, creatorId: string) {
-    const job = await this.jobSuspendedOrNotFoundOrHired(jobid, creatorId);
+
+    const job = await this.jobModel.findOne({ jobId: jobid, creatorId: creatorId })
+
+    if (!job) {
+      throw new NotFoundException('Job Not Found');
+    }
+
+    if (job.status == 'Completed') {
+      throw new NotFoundException('job already completed');
+    }
 
     let complete = await this.jobModel.findOneAndUpdate(
       { jobId: jobid },
