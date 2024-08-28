@@ -175,9 +175,9 @@ export class JobService {
       throw new NotFoundException('Job Not Found');
     }
 
-    if (job.status == 'Completed') {
-      throw new NotFoundException('job already completed');
-    }
+    // if (job.status == 'Completed') {
+    //   throw new NotFoundException('job already completed');
+    // }
 
     let complete = await this.jobModel.findOneAndUpdate(
       { jobId: jobid },
