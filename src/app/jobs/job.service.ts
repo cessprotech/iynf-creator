@@ -258,6 +258,7 @@ export class JobService {
         session
       });
 
+      // set hired to true
       await this.jobModel.findOneAndUpdate({ jobId: job.jobId }, {
         $set: {
           hired: true,
