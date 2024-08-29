@@ -260,7 +260,6 @@ export class JobService {
 
       await this.jobModel.findOneAndUpdate({ jobId: job.jobId }, {
         $set: {
-          hired: true,
           hiredId: hired.hiredId,
           influencerId: hired.influencerId,
           status: 'In Progress'
