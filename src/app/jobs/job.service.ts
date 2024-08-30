@@ -280,7 +280,8 @@ export class JobService {
         $set: {
           hired: true,
           hiredId: hired.hiredId,
-          status: 'accepted'
+          status: 'accepted',
+          paymentStatus: true
         }
       }, { session });
 
