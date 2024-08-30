@@ -420,4 +420,13 @@ export class JobService {
 
     return hired;
   }
+
+
+  async addAmount() {
+    return await this.jobModel.updateMany(
+        {},
+        { $set: { amount: 0 } }
+    );
+
+  }
 }

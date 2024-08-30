@@ -45,6 +45,9 @@ export class Job extends Document {
   @Prop({ required: [true, 'Budget To Is Required!'] })
   budgetTo: number;
   
+  @Prop({ default: 0 })
+  amount: number;
+  
   @Prop({ required: [true, 'Duration Is Required!'] })
   duration: number;
 
