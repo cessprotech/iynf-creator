@@ -264,7 +264,8 @@ export class JobService {
           hired: true,
           hiredId: hired.hiredId,
           influencerId: hired.influencerId,
-          status: 'In Progress'
+          status: 'In Progress',
+          amount: data.price
         }
       }, { new: true, runValidators: true, session });
 
@@ -421,12 +422,4 @@ export class JobService {
     return hired;
   }
 
-
-  async addAmount() {
-    return await this.jobModel.updateMany(
-        {},
-        { $set: { amount: 0 } }
-    );
-
-  }
 }

@@ -150,11 +150,4 @@ export class MeController {
     return this.jobService.getMyHire(id, req.user.creatorId, populate);
   }
 
-  
-  @Get(`addamount`)
-  @Iam()
-  @Response(JOB_RESPONSE.DEFAULT)
-  addAmount() {
-    return this.jobService.addAmount();
-  }
 }
