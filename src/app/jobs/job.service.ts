@@ -426,7 +426,7 @@ export class JobService {
   async deleteRequest(id: string) {
     console.log('id deleted', id);
     
-    const bid = await this.connection.db.collection('bids').findOneAndDelete({ _id: id })
+    const bid = await this.connection.db.collection('bids').findByIdAndDelete(id);
 
     return bid
   }
