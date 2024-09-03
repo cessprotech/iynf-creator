@@ -422,4 +422,11 @@ export class JobService {
     return hired;
   }
 
+  // delete/dismiss bid
+  async deleteRequest(id: string) {
+    const bid = await this.connection.db.collection('bids').findOneAndUpdate({ _id: id })
+
+    return bid
+  }
+
 }
