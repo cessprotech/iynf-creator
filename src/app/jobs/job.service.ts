@@ -17,6 +17,8 @@ import { Hired, HiredModelInterface } from './hired.schema';
 import { InfluencerMService } from '@app/mservices/influencer.m.service';
 import { JOBREQUEST_STATUS, JobRequest, JobRequestModelInterface } from './request.schema';
 import { AppPipeline } from '@app/app.pipeline';
+import { ObjectId } from 'mongodb';
+
 // import { CachingService } from '@libs/modules/caching';
 
 @Injectable()
@@ -424,9 +426,10 @@ export class JobService {
 
   // delete/dismiss bid
   async deleteRequest(id: string) {
-    console.log('id deleted', id);
+
+    const objectId = new ObjectId(id);
     
-    const bid = await this.connection.db.collection('bids').deleteOne({ _id: id })
+    const bid = await this.connection.db.collection('bids').deleteOne({ _id: objectId })
 
     return bid
   }
