@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, ForbiddenException, Get, Inject, NotFoundException, Param, Patch, Post, Query, Req, UseFilters, UsePipes, Delete } from '@nestjs/common';
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Inject, NotFoundException, Param, Patch, Post, Delete, Query, Req, UseFilters, UsePipes } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Response } from '@core/common/interceptors/response';
 import { HttpValidationFilter, MongooseExceptionFilter } from '@core/common/filters';
@@ -72,7 +72,8 @@ export class MeController {
 
     paginateOptions.populate = [
       { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
-      { path: 'deleteCount:id path: 'review' }, 
+      { path: 'bidsCount' },
+      { path: 'review' }, 
       { path: 'creator' },
     ];
 
@@ -86,8 +87,9 @@ export class MeController {
     const populate = [
       { path: 'creator' },
       { path: 'influencer' },
-      { path: 'delete' },
-:ideturn this.jobService.getMyJob(id, req.user.creatorId, populate);
+      { path: 'bids' },
+    ];
+    return this.jobService.getMyJob(id, req.user.creatorId, populate);
   }
 
   @Patch(`${jobsRoute}/complete/:jobid`)
