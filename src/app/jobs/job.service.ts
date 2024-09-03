@@ -429,9 +429,9 @@ export class JobService {
 
     const objectId = new ObjectId(id);
     
-    const bid = await this.connection.db.collection('bids').deleteOne({ _id: objectId })
+    await this.connection.db.collection('bids').deleteOne({ _id: objectId })
 
-    return bid
+    return { message: "bid deleted" }
   }
 
 }
