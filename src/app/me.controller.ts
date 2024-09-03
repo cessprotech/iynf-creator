@@ -151,8 +151,6 @@ export class MeController {
   }
   
   @Delete(`deletebids/:id`)
-  @Iam()
-  @Response(JOB_RESPONSE.DEFAULT)
   deleteRequest(@Param('id') id: string) {
     return this.jobService.deleteRequest(id);
   }
