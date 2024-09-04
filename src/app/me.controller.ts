@@ -72,7 +72,7 @@ export class MeController {
 
     paginateOptions.populate = [
       { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
-      { path: 'bids' },
+      { path: 'bid' },
       { path: 'bidsCount' },
       { path: 'review' }, 
       { path: 'creator' },
@@ -88,7 +88,7 @@ export class MeController {
     const populate = [
       { path: 'creator' },
       { path: 'influencer' },
-      { path: 'bid' },
+      { path: 'bids' },
     ];
     return this.jobService.getMyJob(id, req.user.creatorId, populate);
   }
