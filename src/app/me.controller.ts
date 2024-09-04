@@ -75,6 +75,7 @@ export class MeController {
       { path: 'bidsCount' },
       { path: 'review' }, 
       { path: 'creator' },
+      { path: 'bids' },
     ];
 
     return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
