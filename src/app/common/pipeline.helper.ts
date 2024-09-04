@@ -27,6 +27,13 @@ const lookups = {
         count: true,
     },
 
+    bid: {
+        from: 'bids',
+        localField: 'jobId',
+        foreignField: 'jobId',
+        count: true,
+    },
+
     review: {
         from: 'reviews',
         localField: 'jobId',
