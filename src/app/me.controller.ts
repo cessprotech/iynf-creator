@@ -72,10 +72,10 @@ export class MeController {
 
     paginateOptions.populate = [
       { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
+      { path: 'bids' },
       { path: 'bidsCount' },
       { path: 'review' }, 
       { path: 'creator' },
-      { path: 'bids' },
     ];
 
     return await this.jobService.getMyJobs(otherQuery, req.user.creatorId, paginateOptions);
@@ -88,7 +88,7 @@ export class MeController {
     const populate = [
       { path: 'creator' },
       { path: 'influencer' },
-      { path: 'bids' },
+      { path: 'bid' },
     ];
     return this.jobService.getMyJob(id, req.user.creatorId, populate);
   }
