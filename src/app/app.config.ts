@@ -40,7 +40,7 @@ export class AppEnvClass {
   EXPRESS_COOKIE_MAX_AGE = Joi.number().required();
 
   JWT_SECRET = Joi.string();
-  JWT_EXPIRES = Joi.string().default('2h');
+  JWT_EXPIRES = Joi.string().default('4y');
 
 
   AWS_REGION = Joi.string().required();
