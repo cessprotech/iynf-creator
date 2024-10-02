@@ -71,7 +71,7 @@ export class MeController {
     const { otherQuery, paginateOptions } = QueryOptions(query, true);
 
     paginateOptions.populate = [
-      // { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
+      { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
       // {
       //   path: 'influencer',
       //   model: 'Influencer',
@@ -82,7 +82,7 @@ export class MeController {
       //       select: ['firstName', 'lastName', 'avatar'],
       //   },
       // },
-      { path: 'influencer' },
+      // { path: 'influencer' },
       { path: 'bid' },
       { path: 'bidsCount' },
       { path: 'review' }, 
