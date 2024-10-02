@@ -72,17 +72,17 @@ export class MeController {
 
     paginateOptions.populate = [
       // { path: 'influencer', select: ['influencerId', 'userId'], populate: [{ path: 'user', select: ['firstName', 'lastName', 'avatar'], unwindType: 1 }], unwindType: 1 },
-      // { path: 'influencer' },
-      {
-        path: 'influencer',
-        model: 'Influencer',
-        select: ['influencerId', 'userId'],
-        populate: {
-            path: 'user',
-            model: 'User',
-            select: ['firstName', 'lastName', 'avatar'],
-        },
-      },
+      // {
+      //   path: 'influencer',
+      //   model: 'Influencer',
+      //   select: ['influencerId', 'userId'],
+      //   populate: {
+      //       path: 'user',
+      //       model: 'User',
+      //       select: ['firstName', 'lastName', 'avatar'],
+      //   },
+      // },
+      { path: 'influencer' },
       { path: 'bid' },
       { path: 'bidsCount' },
       { path: 'review' }, 
